@@ -1,0 +1,11 @@
+{
+  "sourceFolder": "src/main/kotlin",
+  "apiSuffix": "",
+  "useTags": true,
+  "exceptionHandler": false,
+  "swaggerAnnotations": false,
+  "interfaceOnly": true,
+  "useBeanValidation": true,
+  "useSpringBoot3": false,
+  "delegatePattern": false
+}

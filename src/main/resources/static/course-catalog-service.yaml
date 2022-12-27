@@ -1,0 +1,447 @@
+openapi: 3.0.1
+info:
+  title: Course Catalog Service
+  version: 1.0.0
+
+servers:
+  - url: /api
+    description: "Base url"
+
+tags:
+  - name: course
+    description: "Operations to manage courses"
+  - name: instructor
+    description: "Operations to manage instructors"
+
+paths:
+  /v1/course:
+    get:
+      tags:
+        - course
+      summary: Get a list of all courses
+      operationId: getAllCourses
+      responses:
+        200:
+          description: Successful Operations and get all courses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllCoursesResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: Internal Sever error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+    post:
+      tags:
+        - course
+      summary: Add a new course
+      operationId: addCourse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCourseRequest"
+      responses:
+        201:
+          description: The course has been created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCourseResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: Internal Sever error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+  /v1/course/{courseId}:
+    get:
+      tags:
+        - course
+      summary: Get a spefic Course by the Id
+      operationId: getCourseById
+      parameters:
+        - $ref: "#/components/parameters/CourseIdPathVariable"
+      responses:
+        200:
+          description: The course that corresponds to the given Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCourseResponse"
+        404:
+          description: No Course found for the given Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: Internal Sever error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+    put:
+      tags:
+        - course
+      summary: Update a course with the given Id
+      operationId: updateCourseById
+      parameters:
+        - $ref: "#/components/parameters/CourseIdPathVariable"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCourseRequest"
+      responses:
+        204:
+          description: successfuly updated the given cours
+        404:
+          description: course id not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+    delete:
+      tags:
+        - course
+      summary: Delete the course by the given Id
+      operationId: deleteCourseById
+      parameters:
+        - $ref: "#/components/parameters/CourseIdPathVariable"
+      responses:
+        204:
+          description: Course has been succesfully deleted
+        404:
+          description: course id not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+
+  /v1/instructor:
+    get:
+      tags:
+        - instructor
+      summary: Get a list of all instructors
+      operationId: getAllInstructors
+      responses:
+        200:
+          description: Successful Operations and get all instructors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstructorDto"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: Internal Sever error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+    post:
+      tags:
+        - instructor
+      summary: Add a new instructor
+      operationId: addInstructor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInstructorRequest"
+      responses:
+        201:
+          description: The instructor has been created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorDto"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: Internal Sever error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+  /v1/instructor/{instructorId}:
+    get:
+      tags:
+        - instructor
+      summary: Get a spefic Instructor by the Id
+      operationId: getInstructorById
+      parameters:
+        - $ref: "#/components/parameters/InstructorIdPathVariable"
+      responses:
+        200:
+          description: The instructor that corresponds to the given Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorDto"
+        404:
+          description: No Instructor found for the given Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: Internal Sever error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+    put:
+      tags:
+        - instructor
+      summary: Update a instructor with the given Id
+      operationId: updateInstructorById
+      parameters:
+        - $ref: "#/components/parameters/InstructorIdPathVariable"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInstructorRequest"
+      responses:
+        204:
+          description: successfuly updated the given cours
+        404:
+          description: instructor id not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+    delete:
+      tags:
+        - instructor
+      summary: Delete the instructor by the given Id
+      operationId: deleteInstructorById
+      parameters:
+        - $ref: "#/components/parameters/InstructorIdPathVariable"
+      responses:
+        204:
+          description: Instructor has been succesfully deleted
+        404:
+          description: instructor id not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+        500:
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericError"
+
+components:
+  parameters:
+    CourseIdPathVariable:
+      name: courseId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    InstructorIdPathVariable:
+      name: instructorId
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    GenericError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    GetAllCoursesResponse:
+      type: object
+      properties:
+        courses:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourseDto"
+    GetCourseResponse:
+      type: object
+      properties:
+        course:
+          type: object
+          items:
+            $ref: "#/components/schemas/CourseDto"
+    UpdateCourseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        instructorId:
+          type: integer
+      required:
+        - name
+        - category
+        - instructorId
+    CreateCourseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        instructorId:
+          type: integer
+      required:
+        - name
+        - category
+        - instructorId
+    CreateCourseResponse:
+      type: object
+      properties:
+        course:
+          type: object
+          items:
+            $ref: "#/components/schemas/CourseDto"
+    CourseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        catagory:
+          type: string
+        instructorId:
+          type: integer
+    InstructorDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        courses:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourseDto"
+    GetAllInstructorsResponse:
+      type: object
+      properties:
+        instructors:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstructorDto"
+    GetInstructorResponse:
+      type: object
+      properties:
+        instructor:
+          type: object
+          items:
+            $ref: "#/components/schemas/InstructorDto"
+    CreateInstructorRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    CreateInstructorResponse:
+      type: object
+      properties:
+        course:
+          type: object
+          items:
+            $ref: "#/components/schemas/InstructorDto"
+    UpdateInstructorRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name

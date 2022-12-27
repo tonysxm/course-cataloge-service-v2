@@ -1,0 +1,25 @@
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    url: /course-catalog-service.yaml
+logging:
+  level:
+    root: DEBUG
+spring:
+  application:
+    name: course-cataloge-service
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/courses
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop #this recreates the db, not recommended for prod
+    show-sql: true
+  h2:
+    console:
+      enabled: true
