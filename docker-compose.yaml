@@ -14,6 +14,26 @@ services:
         max-file: "3"
     ports:
       - '5432:5432'
-
+  server:
+    image: docker.io/library/course-cataloge-service-v2:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+      - "9433:9433"
+    environment:
+      DELINQUENT_TASK_TIME: '02:00'
+      SCHEDULEDPAYMENT_TASK_TIME: '02:30'
+    healthcheck:
+      test: curl --fail -s http://localhost:8080/actuator/health || exit 1
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 3
+    depends_on:
+      - db
+    expose:
+      - 8080
+    links:
+      - "db:database"
+    restart: always
 volumes:
   db_data: {}

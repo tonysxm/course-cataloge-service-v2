@@ -11,7 +11,7 @@ spring:
     name: course-cataloge-service
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://database:5432/courses
+    url: jdbc:postgresql://localhost:5432/courses
     username: postgres
     password: postgres
   jpa:
