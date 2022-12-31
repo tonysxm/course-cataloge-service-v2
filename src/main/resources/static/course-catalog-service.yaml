@@ -26,7 +26,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetAllCoursesResponse"
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseDto"
         400:
           description: Bad Request
           content:
@@ -49,14 +51,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCourseRequest"
+              $ref: "#/components/schemas/CourseDto"
       responses:
         201:
           description: The course has been created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateCourseResponse"
+                $ref: "#/components/schemas/CourseDto"
         400:
           description: Bad Request
           content:
@@ -83,7 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetCourseResponse"
+                $ref: "#/components/schemas/CourseDto"
         404:
           description: No Course found for the given Id
           content:

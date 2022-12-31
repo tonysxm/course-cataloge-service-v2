@@ -10,23 +10,26 @@ import java.util.*
 
 @RestController
 class CourseController(private val courseService: CourseService) : Course {
-    override fun addCourse(createCourseRequest: CreateCourseRequest): ResponseEntity<CreateCourseResponse> {
-        return ResponseEntity(CreateCourseResponse(listOf(courseService.addCourse(CourseDto(name = createCourseRequest.name, catagory = createCourseRequest.category, instructorId = createCourseRequest.instructorId)))), HttpStatus.OK)
+    override fun addCourse(courseDto: CourseDto): ResponseEntity<CourseDto> {
+        return ResponseEntity(courseService.addCourse(CourseDto(name = courseDto.name, catagory = courseDto.catagory,
+            instructorId = courseDto.instructorId)), HttpStatus.CREATED)
     }
 
     override fun deleteCourseById(courseId: UUID): ResponseEntity<Unit> {
-        return super.deleteCourseById(courseId)
+        return ResponseEntity(courseService.delete(courseId), HttpStatus.NO_CONTENT)
     }
 
-    override fun getAllCourses(): ResponseEntity<GetAllCoursesResponse> {
-        return ResponseEntity(GetAllCoursesResponse(courseService.getAllCourses()), HttpStatus.OK)
+    override fun getAllCourses(): ResponseEntity<List<CourseDto>> {
+        return ResponseEntity(courseService.getAllCourses(), HttpStatus.OK)
     }
 
-    override fun getCourseById(courseId: UUID): ResponseEntity<GetCourseResponse> {
-        return super.getCourseById(courseId)
+    override fun getCourseById(courseId: UUID): ResponseEntity<CourseDto> {
+        return ResponseEntity(courseService.getCourseById(courseId), HttpStatus.OK)
     }
 
     override fun updateCourseById(courseId: UUID, updateCourseRequest: UpdateCourseRequest): ResponseEntity<Unit> {
-        return super.updateCourseById(courseId, updateCourseRequest)
+        return ResponseEntity(courseService
+            .updateCourse(CourseDto(id = courseId,name = updateCourseRequest.name, catagory = updateCourseRequest.category,
+                    instructorId = updateCourseRequest.instructorId)), HttpStatus.NO_CONTENT)
     }
 }
